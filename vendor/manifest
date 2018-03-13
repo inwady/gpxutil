@@ -1,0 +1,24 @@
+{
+	"version": 0,
+	"dependencies": [
+		{
+			"importpath": "github.com/joeshaw/gengen/generic",
+			"repository": "https://github.com/joeshaw/gengen",
+			"revision": "f195b42a7dde1b5fb6be718e3ca9c0fc64009646",
+			"branch": "master",
+			"path": "/generic"
+		},
+		{
+			"importpath": "github.com/tkrajina/gpxgo",
+			"repository": "https://github.com/tkrajina/gpxgo",
+			"revision": "7848cf26f5a58b4a4e23b89a4b67cfc3d52dd042",
+			"branch": "master"
+		},
+		{
+			"importpath": "github.com/twpayne/go-polyline",
+			"repository": "https://github.com/twpayne/go-polyline",
+			"revision": "1a0cd0ee854013357d201b8ad0a4e776c55c5af6",
+			"branch": "master"
+		}
+	]
+}
