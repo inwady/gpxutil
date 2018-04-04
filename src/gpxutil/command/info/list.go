@@ -1,4 +1,4 @@
-package command
+package info
 
 import (
 	"gpxutil/context"
@@ -9,7 +9,7 @@ import (
 
 type ListCommand struct{}
 
-func (ac *ListCommand) Execute(gctx *context.GPXContext, params []string) error {
+func (ac *ListCommand) Execute(gctx *context.GPXContext, params []string) (bool, error) {
 	var (
 		index uint
 	)
@@ -17,7 +17,7 @@ func (ac *ListCommand) Execute(gctx *context.GPXContext, params []string) error 
 	if len(params) > 1 {
 		tempIndex, err := strconv.ParseInt(params[1], 10, 32)
 		if err != nil && tempIndex < 0 {
-			return errors.New("bad index")
+			return false, errors.New("bad index")
 		}
 		index = uint(tempIndex)
 	} else {
@@ -26,11 +26,11 @@ func (ac *ListCommand) Execute(gctx *context.GPXContext, params []string) error 
 
 	data, err := gctx.GetListInfo(index)
 	if err != nil {
-		return err
+		return false, err
 	}
 
 	fmt.Printf("%s", data)
-	return nil
+	return false, nil
 }
 
 func (ac *ListCommand) UnExecute(gctx *context.GPXContext) error {

@@ -4,6 +4,7 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 	"errors"
 	"log"
+	"fmt"
 )
 
 type GPXContext struct {
@@ -36,8 +37,18 @@ func (gctx *GPXContext) SetWorkIndex(index uint) error {
 	return nil
 }
 
-func (gctx *GPXContext) AddGPX(gpx *gpx.GPX) {
+func (gctx *GPXContext) AddGPX(gpx *gpx.GPX) uint {
 	gctx.gpxData = append(gctx.gpxData, gpx)
+	return uint(len(gctx.gpxData) - 1)
+}
+
+func (gctx *GPXContext) RemoveGPX(index uint) error {
+	if index >= uint(len(gctx.gpxData)) {
+		return fmt.Errorf("out of range")
+	}
+
+	gctx.gpxData = append(gctx.gpxData[:index], gctx.gpxData[index + 1:]...)
+	return nil
 }
 
 func (gctx *GPXContext) AddPoint(lat float64, log float64) error {

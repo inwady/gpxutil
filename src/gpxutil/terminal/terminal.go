@@ -28,13 +28,7 @@ func InitTerminal(gctx *context.GPXContext) error {
 			continue
 		}
 
-		concreteCommand, ok := command.CommandTable[commands[0]]
-		if !ok {
-			fmt.Printf("unknown command\n")
-			continue
-		}
-
-		err = concreteCommand.Execute(gctx, commands)
+		err = command.Execute(gctx, commands)
 		if err != nil {
 			fmt.Printf("error: %s\n", err)
 			continue

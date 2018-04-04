@@ -5,6 +5,10 @@ import (
 	"github.com/tkrajina/gpxgo/gpx"
 )
 
+type HistoryCommand struct {
+	canUndo bool
+}
+
 func ImportFromPolyline(name string, polylineBytes []byte) (*gpx.GPX, error) {
 	coords, _, err := polyline.DecodeCoords(polylineBytes)
 	if err != nil {
