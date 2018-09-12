@@ -36,3 +36,7 @@ func (ac *ListCommand) Execute(gctx *context.GPXContext, params []string) (bool,
 func (ac *ListCommand) UnExecute(gctx *context.GPXContext) error {
 	return nil
 }
+
+func (ac *ListCommand) Info() string {
+	return "info about current gpx"
+}

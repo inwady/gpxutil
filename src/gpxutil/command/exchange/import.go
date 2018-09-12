@@ -30,3 +30,7 @@ func (ec *ExchangeCommand) Execute(gctx *context.GPXContext, params []string) (b
 func (ec *ExchangeCommand) UnExecute(gctx *context.GPXContext) error {
 	return gctx.RemoveGPX(ec.index)
 }
+
+func (ac *ExchangeCommand) Info() string {
+	return "import new gpx [polyline]"
+}

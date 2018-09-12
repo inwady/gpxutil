@@ -38,3 +38,7 @@ func (sc *SetIndexCommand) UnExecute(gctx *context.GPXContext) error {
 
 	return nil
 }
+
+func (ac *SetIndexCommand) Info() string {
+	return "set gpx index [index]"
+}

@@ -19,3 +19,7 @@ func (ac *InfoCommand) Execute(gctx *context.GPXContext, params []string) (bool,
 func (ac *InfoCommand) UnExecute(gctx *context.GPXContext) error {
 	return nil
 }
+
+func (ac *InfoCommand) Info() string {
+	return "basic info"
+}

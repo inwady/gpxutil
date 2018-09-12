@@ -41,3 +41,7 @@ func (ac *AddCommand) Execute(gctx *context.GPXContext, params []string) (bool, 
 func (ac *AddCommand) UnExecute(gctx *context.GPXContext) error {
 	return gctx.RemovePoint(ac.index)
 }
+
+func (ac *AddCommand) Info() string {
+	return "add new point [index, lat, log]"
+}

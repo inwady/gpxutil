@@ -19,3 +19,7 @@ func (sc *ExitCommand) Execute(gctx *context.GPXContext, params []string) (bool,
 func (sc *ExitCommand) UnExecute(gctx *context.GPXContext) error {
 	return nil
 }
+
+func (ac *ExitCommand) Info() string {
+	return "exit from program"
+}

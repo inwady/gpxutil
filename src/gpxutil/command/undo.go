@@ -18,3 +18,7 @@ func (ac *UndoCommand) Execute(_ *context.GPXContext, params []string) (bool, er
 func (ac *UndoCommand) UnExecute(gctx *context.GPXContext) error {
 	return nil
 }
+
+func (ac *UndoCommand) Info() string {
+	return "undo"
+}

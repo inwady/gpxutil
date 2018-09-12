@@ -50,3 +50,7 @@ func (ac *ChangeCommand) Execute(gctx *context.GPXContext, params []string) (boo
 func (ac *ChangeCommand) UnExecute(gctx *context.GPXContext) error {
 	return gctx.ChangePoint(ac.index, ac.changedLat, ac.changedLog)
 }
+
+func (ac *ChangeCommand) Info() string {
+	return "change point [index, lat, log]"
+}

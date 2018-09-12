@@ -1,16 +1,17 @@
 package command
 
 import (
-	"fmt"
-	"gpxutil/context"
+"fmt"
+"gpxutil/context"
 )
 
 type HelpCommand struct {}
 
 func (sc *HelpCommand) Execute(gctx *context.GPXContext, params []string) (bool, error) {
-	fmt.Printf("Commands:\n")
-	for key, _ := range commandTable {
-		fmt.Printf("- %s\n", key)
+	fmt.Printf("Commands GPXUtil:\n")
+	for key, v := range commandTable {
+		// TODO a.naberezhnyi
+		fmt.Printf("         - %s (%s) \n", key, v().Info())
 	}
 
 	return false, nil
@@ -18,4 +19,8 @@ func (sc *HelpCommand) Execute(gctx *context.GPXContext, params []string) (bool,
 
 func (sc *HelpCommand) UnExecute(gctx *context.GPXContext) error {
 	return nil
+}
+
+func (ac *HelpCommand) Info() string {
+	return "help command"
 }

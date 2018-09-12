@@ -23,6 +23,8 @@ var (
 		"change": func() model.Command { return new(point.ChangeCommand) },
 		"index": func() model.Command { return new(index.SetIndexCommand) },
 
+		"get": func() model.Command { return new(point.GetPointCommand) },
+
 		"list": func() model.Command { return new(info.ListCommand) },
 
 		"import": func() model.Command { return new(exchange.ExchangeCommand) },

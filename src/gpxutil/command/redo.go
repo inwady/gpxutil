@@ -24,3 +24,7 @@ func (ac *RedoCommand) Execute(_ *context.GPXContext, params []string) (bool, er
 func (ac *RedoCommand) UnExecute(gctx *context.GPXContext) error {
 	return nil
 }
+
+func (ac *RedoCommand) Info() string {
+	return "redo"
+}
