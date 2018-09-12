@@ -19,8 +19,8 @@ type StackCommand struct {
 var (
 	commandTable = map[string]func() model.Command{
 		"add": func() model.Command { return new(point.AddCommand) },
-		"remove": nil,
-		"change": nil,
+		"remove": func() model.Command { return new(point.RemoveCommand) },
+		"change": func() model.Command { return new(point.ChangeCommand) },
 		"index": func() model.Command { return new(index.SetIndexCommand) },
 
 		"list": func() model.Command { return new(info.ListCommand) },
@@ -30,6 +30,8 @@ var (
 		"undo": func() model.Command { return new(UndoCommand) },
 		"redo": func() model.Command { return new(RedoCommand) },
 		"info": func() model.Command { return new(InfoCommand) },
+		"help": func() model.Command { return new(HelpCommand) },
+		"exit": func() model.Command { return new(ExitCommand) },
 	}
 
 	stackChange []StackCommand

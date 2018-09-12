@@ -51,11 +51,52 @@ func (gctx *GPXContext) RemoveGPX(index uint) error {
 	return nil
 }
 
-func (gctx *GPXContext) AddPoint(lat float64, log float64) error {
+func (gctx *GPXContext) SizePoint() uint {
+	g := gctx.gpxData[gctx.workIndex]
+
+	size := len(getSegment(g).Points)
+	return uint(size)
+}
+
+func (gctx *GPXContext) GetPoint(index uint) (float64, float64, error) {
+	g := gctx.gpxData[gctx.workIndex]
+
+	segment := getSegment(g)
+	if index >= uint(len(segment.Points)) {
+		return 0, 0, errors.New("points, out of range")
+	}
+
+	p := segment.Points[index]
+	return p.Latitude, p.Longitude, nil
+}
+
+func (gctx *GPXContext) AddPoint(index uint, lat float64, log float64) error {
+	g := gctx.gpxData[gctx.workIndex]
+
+	segment := getSegment(g)
+	segment.Points = append(segment.Points[:index], append([]gpx.GPXPoint{
+		convertGPXPoint(lat, log),
+	}, segment.Points[index:]...) ...)
+
+	return nil
+}
+
+func (gctx *GPXContext) PushPoint(lat float64, log float64) error {
 	g := gctx.gpxData[gctx.workIndex]
 
 	segment := getSegment(g)
 	segment.Points = append(segment.Points, convertGPXPoint(lat, log))
+	return nil
+}
+
+func (gctx *GPXContext) PopPoint() error {
+	g := gctx.gpxData[gctx.workIndex]
+
+	segment := getSegment(g)
+
+
+	lastIndex := len(segment.Points) - 1
+	segment.Points = append(segment.Points[:lastIndex], segment.Points[lastIndex+ 1:]...)
 	return nil
 }
 

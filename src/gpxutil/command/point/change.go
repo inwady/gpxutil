@@ -6,17 +6,23 @@ import (
 	"strconv"
 )
 
-type ChangeCommand struct{}
+type ChangeCommand struct {
+	index uint
+	changedLat float64
+	changedLog float64
+}
 
-func (ac *ChangeCommand) execute(gctx *context.GPXContext, params []string) (bool, error) {
+func (ac *ChangeCommand) Execute(gctx *context.GPXContext, params []string) (bool, error) {
 	if len(params) < 4 {
 		return false, errors.New("bad params")
 	}
 
-	i, err := strconv.ParseInt(params[1], 10, 32)
-	if err != nil || i < 0 {
+	_i, err := strconv.ParseInt(params[1], 10, 32)
+	if err != nil || _i < 0 {
 		return false, errors.New("bad index")
 	}
+
+	i := uint(_i)
 
 	lat, err := strconv.ParseFloat(params[2], 64)
 	if err != nil {
@@ -28,9 +34,19 @@ func (ac *ChangeCommand) execute(gctx *context.GPXContext, params []string) (boo
 		return false, err
 	}
 
-	return true, gctx.ChangePoint(uint(i), lat, log)
+	_lat, _log, err := gctx.GetPoint(i)
+	ac.index = i
+	ac.changedLat = _lat
+	ac.changedLog = _log
+
+	err = gctx.ChangePoint(i, lat, log)
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
 
-func (ac *ChangeCommand) unExecute(gctx *context.GPXContext) error {
-	return nil
+func (ac *ChangeCommand) UnExecute(gctx *context.GPXContext) error {
+	return gctx.ChangePoint(ac.index, ac.changedLat, ac.changedLog)
 }

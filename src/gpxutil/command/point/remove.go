@@ -6,21 +6,32 @@ import (
 	"strconv"
 )
 
-type RemoveCommand struct{}
+type RemoveCommand struct  {
+	index uint
+	changedLat float64
+	changedLog float64
+}
 
-func (ac *RemoveCommand) execute(gctx *context.GPXContext, params []string) (bool, error) {
+func (ac *RemoveCommand) Execute(gctx *context.GPXContext, params []string) (bool, error) {
 	if len(params) < 2 {
 		return false, errors.New("bad params")
 	}
 
-	i, err := strconv.ParseInt(params[1], 10, 32)
-	if err != nil || i < 0 {
+	_i, err := strconv.ParseInt(params[1], 10, 32)
+	if err != nil || _i < 0 {
 		return false, errors.New("bad index")
 	}
 
-	return true, gctx.RemovePoint(uint(i))
+	i := uint(_i)
+
+	_lat, _log, err := gctx.GetPoint(i)
+	ac.index = i
+	ac.changedLat = _lat
+	ac.changedLog = _log
+
+	return true, gctx.RemovePoint(i)
 }
 
-func (ac *RemoveCommand) unExecute(gctx *context.GPXContext) error {
-	return nil
+func (ac *RemoveCommand) UnExecute(gctx *context.GPXContext) error {
+	return gctx.AddPoint(ac.index - 1, ac.changedLat, ac.changedLog)
 }
